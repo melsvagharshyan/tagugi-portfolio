@@ -95,6 +95,7 @@ export const ru: Translation = {
       'Загляните в моё резюме, чтобы узнать больше о моём опыте и навыках!',
     ],
     downloadCv: 'Скачать резюме',
+    skillsHint: 'Потяните, чтобы вращать',
     rows: {
       experience: 'Опыт',
       education: 'Образование',

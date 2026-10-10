@@ -55,6 +55,26 @@ export const CAROUSEL = {
   damping: 4,
 };
 
+export const SKILLS_GLOBE = {
+  radius: 2.1,
+  autoSpin: 0.18,
+  dragSensitivity: 0.006,
+  inertia: 2.5,
+};
+
+export const HERO_SCROLL = {
+  orbLift: 0.45,
+  orbShrink: 0.25,
+  pearlSpread: 0.7,
+};
+
+export const PORTRAIT_RIPPLE = {
+  frequency: 26,
+  speed: 4,
+  strength: 0.014,
+  chroma: 0.005,
+};
+
 export const CURSOR_TRAIL_EASE = 0.16;
 
 export const CURSOR_INTERACTIVE_SELECTOR = '[data-cursor], a, button, [role="button"]';

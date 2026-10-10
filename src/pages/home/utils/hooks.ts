@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
+import { useCallback, useEffect, useMemo, useRef, useState, type PointerEvent as ReactPointerEvent } from 'react';
 import { useTranslation } from 'react-i18next';
 import { DEFAULT_LANGUAGE, LANGUAGES, type LanguageCode } from '../../../i18n/languages';
 import {
@@ -7,9 +7,10 @@ import {
   HEADER_HIDE_AFTER,
   HEADER_SCROLL_OFFSET,
   PROJECTS,
+  SKILLS_GLOBE,
 } from './constants';
 import { getScrollProgress } from './helpers';
-import type { CursorVariant, Project } from './types';
+import type { CursorVariant, DragSpinState, Project } from './types';
 
 const getCursorVariant = (target: EventTarget | null): CursorVariant => {
   if (!(target instanceof Element)) return 'default';
@@ -232,6 +233,36 @@ export const useLanguage = () => {
   const change = useCallback((code: LanguageCode) => void i18n.changeLanguage(code), [i18n]);
 
   return { current, change, languages: LANGUAGES };
+};
+
+export const useDragSpin = () => {
+  const stateRef = useRef<DragSpinState>({ x: 0, y: 0, velocityX: 0, velocityY: 0, dragging: false });
+  const lastRef = useRef({ x: 0, y: 0 });
+
+  const onPointerDown = useCallback((event: ReactPointerEvent<HTMLElement>) => {
+    event.currentTarget.setPointerCapture(event.pointerId);
+    stateRef.current.dragging = true;
+    lastRef.current = { x: event.clientX, y: event.clientY };
+  }, []);
+
+  const onPointerMove = useCallback((event: ReactPointerEvent<HTMLElement>) => {
+    const state = stateRef.current;
+    if (!state.dragging) return;
+    const dx = (event.clientX - lastRef.current.x) * SKILLS_GLOBE.dragSensitivity;
+    const dy = (event.clientY - lastRef.current.y) * SKILLS_GLOBE.dragSensitivity;
+    lastRef.current = { x: event.clientX, y: event.clientY };
+    state.y += dx;
+    state.x = Math.max(-1, Math.min(1, state.x + dy));
+    state.velocityX = dy;
+    state.velocityY = dx;
+  }, []);
+
+  const onPointerUp = useCallback((event: ReactPointerEvent<HTMLElement>) => {
+    event.currentTarget.releasePointerCapture(event.pointerId);
+    stateRef.current.dragging = false;
+  }, []);
+
+  return { stateRef, handlers: { onPointerDown, onPointerMove, onPointerUp, onPointerCancel: onPointerUp } };
 };
 
 export const useScrollCarousel = <T extends HTMLElement>(count: number) => {

@@ -1,9 +1,9 @@
 import { useTranslation } from 'react-i18next';
-import { SKILLS } from '../utils/constants';
 import { AboutIntro } from './AboutIntro';
 import { ResumeRow } from './ResumeRow';
 import { RichText } from './RichText';
 import { SectionTitle } from './SectionTitle';
+import { SkillsShowcase } from './SkillsShowcase';
 import { TagList } from './TagList';
 import { TimelineList } from './TimelineList';
 
@@ -30,7 +30,7 @@ export const AboutSection = () => {
             <TimelineList entries={t('about.practice', { returnObjects: true })} />
           </ResumeRow>
           <ResumeRow label={t('about.rows.skills')}>
-            <TagList items={SKILLS} />
+            <SkillsShowcase />
           </ResumeRow>
           <ResumeRow label={t('about.rows.languages')}>
             <TagList items={t('about.languages', { returnObjects: true })} />

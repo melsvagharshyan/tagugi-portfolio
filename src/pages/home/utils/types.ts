@@ -41,6 +41,14 @@ export interface ImageMaterialUniforms {
   zoom: number;
 }
 
+export interface DragSpinState {
+  x: number;
+  y: number;
+  velocityX: number;
+  velocityY: number;
+  dragging: boolean;
+}
+
 export interface PearlConfig {
   position: [number, number, number];
   scale: number;
