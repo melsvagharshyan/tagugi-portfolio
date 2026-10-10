@@ -19,10 +19,10 @@ export const NavPill = ({ activeId, scrolled }: NavPillProps) => {
   return (
     <div
       onMouseLeave={() => setHoveredKey(null)}
-      className={`relative hidden items-center rounded-full border p-1.5 backdrop-blur-xl transition-colors duration-500 md:flex ${
+      className={`relative hidden items-center rounded-full border p-1.5 transition-colors duration-500 md:flex ${
         scrolled
-          ? 'border-ink/10 bg-ivory/80 shadow-[0_10px_40px_-20px_rgba(43,32,37,0.35)]'
-          : 'border-ink/5 bg-ivory/40'
+          ? 'border-blush bg-ivory/95 shadow-[0_10px_40px_-20px_rgba(51,51,51,0.3)]'
+          : 'border-ink/5 bg-ivory/80'
       }`}
     >
       <span

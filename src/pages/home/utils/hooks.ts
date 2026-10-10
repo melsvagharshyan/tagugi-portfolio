@@ -1,4 +1,10 @@
-import { useCallback, useEffect, useMemo, useRef, useState, type PointerEvent as ReactPointerEvent } from 'react';
+import {
+  useCallback,
+  useEffect,
+  useMemo,
+  useRef,
+  useState,
+} from 'react';
 import { useTranslation } from 'react-i18next';
 import { DEFAULT_LANGUAGE, LANGUAGES, type LanguageCode } from '../../../i18n/languages';
 import {
@@ -7,11 +13,9 @@ import {
   HEADER_HIDE_AFTER,
   HEADER_SCROLL_OFFSET,
   PROJECTS,
-  SKILLS_GLOBE,
-  TIMELINE,
 } from './constants';
-import { getReadingProgress, getScrollProgress } from './helpers';
-import type { CursorVariant, DragSpinState, Project, TimelineLayout } from './types';
+import { getSceneQuality, getScrollProgress } from './helpers';
+import type { CursorVariant, Project } from './types';
 
 const getCursorVariant = (target: EventTarget | null): CursorVariant => {
   if (!(target instanceof Element)) return 'default';
@@ -36,28 +40,29 @@ export const useCustomCursor = () => {
     const trail = { ...target };
     let frame = 0;
 
-    const onMove = (event: PointerEvent) => {
-      target.x = event.clientX;
-      target.y = event.clientY;
-      if (dotRef.current) {
-        dotRef.current.style.transform = `translate3d(${target.x}px, ${target.y}px, 0)`;
-      }
-      setVariant(getCursorVariant(event.target));
-    };
-
-    const onLeave = () => setVariant('hidden');
-    const onDown = () => setPressed(true);
-    const onUp = () => setPressed(false);
-
     const tick = () => {
       trail.x += (target.x - trail.x) * CURSOR_TRAIL_EASE;
       trail.y += (target.y - trail.y) * CURSOR_TRAIL_EASE;
       if (ringRef.current) {
         ringRef.current.style.transform = `translate3d(${trail.x}px, ${trail.y}px, 0)`;
       }
-      frame = requestAnimationFrame(tick);
+      const settled = Math.abs(target.x - trail.x) < 0.1 && Math.abs(target.y - trail.y) < 0.1;
+      frame = settled ? 0 : requestAnimationFrame(tick);
     };
-    frame = requestAnimationFrame(tick);
+
+    const onMove = (event: PointerEvent) => {
+      target.x = event.clientX;
+      target.y = event.clientY;
+      if (dotRef.current) {
+        dotRef.current.style.transform = `translate3d(${target.x}px, ${target.y}px, 0)`;
+      }
+      if (!frame) frame = requestAnimationFrame(tick);
+      setVariant(getCursorVariant(event.target));
+    };
+
+    const onLeave = () => setVariant('hidden');
+    const onDown = () => setPressed(true);
+    const onUp = () => setPressed(false);
 
     window.addEventListener('pointermove', onMove, { passive: true });
     window.addEventListener('pointerdown', onDown);
@@ -113,7 +118,7 @@ export const useEscapeKey = (onEscape: () => void, enabled = true) => {
   }, [onEscape, enabled]);
 };
 
-export const useInView = <T extends Element>(threshold = 0.15) => {
+export const useInView = <T extends Element>(threshold = 0.15, rootMargin = '0px') => {
   const ref = useRef<T>(null);
   const [inView, setInView] = useState(false);
 
@@ -127,14 +132,16 @@ export const useInView = <T extends Element>(threshold = 0.15) => {
           observer.disconnect();
         }
       },
-      { threshold },
+      { threshold, rootMargin },
     );
     observer.observe(node);
     return () => observer.disconnect();
-  }, [threshold]);
+  }, [threshold, rootMargin]);
 
   return { ref, inView };
 };
+
+export const useSceneQuality = () => useState(getSceneQuality)[0];
 
 export const useHeaderScroll = (locked: boolean) => {
   const progressRef = useRef<HTMLDivElement>(null);
@@ -234,105 +241,6 @@ export const useLanguage = () => {
   const change = useCallback((code: LanguageCode) => void i18n.changeLanguage(code), [i18n]);
 
   return { current, change, languages: LANGUAGES };
-};
-
-export const useScrollScene = <T extends HTMLElement>() => {
-  const containerRef = useRef<T>(null);
-  const progressRef = useRef(0);
-  const [visible, setVisible] = useState(false);
-
-  useEffect(() => {
-    const node = containerRef.current;
-    if (!node) return;
-    const update = () => {
-      progressRef.current = getScrollProgress(node);
-    };
-    const observer = new IntersectionObserver(([entry]) => setVisible(entry.isIntersecting));
-
-    update();
-    observer.observe(node);
-    window.addEventListener('scroll', update, { passive: true });
-    return () => {
-      observer.disconnect();
-      window.removeEventListener('scroll', update);
-    };
-  }, []);
-
-  return { containerRef, progressRef, visible };
-};
-
-export const useTimeline = <T extends HTMLElement>() => {
-  const listRef = useRef<T>(null);
-  const progressRef = useRef(0);
-  const [layout, setLayout] = useState<TimelineLayout>({ height: 0, anchors: [] });
-  const [reachedCount, setReachedCount] = useState(0);
-  const [visible, setVisible] = useState(false);
-
-  useEffect(() => {
-    const node = listRef.current;
-    if (!node) return;
-    let anchors: number[] = [];
-
-    const update = () => {
-      const progress = getReadingProgress(node, TIMELINE.viewportFocus);
-      progressRef.current = progress;
-      const y = progress * node.offsetHeight;
-      setReachedCount(anchors.filter((anchor) => anchor <= y).length);
-    };
-
-    const measure = () => {
-      const listTop = node.getBoundingClientRect().top;
-      anchors = [...node.querySelectorAll<HTMLElement>('[data-timeline-anchor]')].map((anchor) => {
-        const rect = anchor.getBoundingClientRect();
-        return rect.top - listTop + rect.height / 2;
-      });
-      setLayout({ height: node.offsetHeight, anchors });
-      update();
-    };
-
-    const resizeObserver = new ResizeObserver(measure);
-    const visibilityObserver = new IntersectionObserver(([entry]) => setVisible(entry.isIntersecting));
-    resizeObserver.observe(node);
-    visibilityObserver.observe(node);
-    window.addEventListener('scroll', update, { passive: true });
-    return () => {
-      resizeObserver.disconnect();
-      visibilityObserver.disconnect();
-      window.removeEventListener('scroll', update);
-    };
-  }, []);
-
-  return { listRef, progressRef, layout, reachedCount, visible };
-};
-
-export const useDragSpin = () => {
-  const stateRef = useRef<DragSpinState>({ x: 0, y: 0, velocityX: 0, velocityY: 0, dragging: false });
-  const lastRef = useRef({ x: 0, y: 0 });
-
-  const onPointerDown = useCallback((event: ReactPointerEvent<HTMLElement>) => {
-    event.currentTarget.setPointerCapture(event.pointerId);
-    stateRef.current.dragging = true;
-    lastRef.current = { x: event.clientX, y: event.clientY };
-  }, []);
-
-  const onPointerMove = useCallback((event: ReactPointerEvent<HTMLElement>) => {
-    const state = stateRef.current;
-    if (!state.dragging) return;
-    const dx = (event.clientX - lastRef.current.x) * SKILLS_GLOBE.dragSensitivity;
-    const dy = (event.clientY - lastRef.current.y) * SKILLS_GLOBE.dragSensitivity;
-    lastRef.current = { x: event.clientX, y: event.clientY };
-    state.y += dx;
-    state.x = Math.max(-1, Math.min(1, state.x + dy));
-    state.velocityX = dy;
-    state.velocityY = dx;
-  }, []);
-
-  const onPointerUp = useCallback((event: ReactPointerEvent<HTMLElement>) => {
-    event.currentTarget.releasePointerCapture(event.pointerId);
-    stateRef.current.dragging = false;
-  }, []);
-
-  return { stateRef, handlers: { onPointerDown, onPointerMove, onPointerUp, onPointerCancel: onPointerUp } };
 };
 
 export const useScrollCarousel = <T extends HTMLElement>(count: number) => {

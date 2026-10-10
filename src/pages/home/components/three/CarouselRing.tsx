@@ -1,4 +1,3 @@
-import { Sparkles } from '@react-three/drei';
 import { useFrame, useThree } from '@react-three/fiber';
 import { useRef, type RefObject } from 'react';
 import { MathUtils, type Group } from 'three';
@@ -65,15 +64,6 @@ export const CarouselRing = ({ projects, progressRef, onSelect, onHoverChange }:
           <meshBasicMaterial color={SCENE_COLORS.rose} transparent opacity={0.35} />
         </mesh>
       </group>
-
-      <Sparkles
-        count={50}
-        scale={[radius * 2.6, cardHeight * 1.6, radius * 2]}
-        size={2.5}
-        speed={0.25}
-        opacity={0.6}
-        color={SCENE_COLORS.champagne}
-      />
     </group>
   );
 };

@@ -1,14 +1,15 @@
-import { Float } from '@react-three/drei';
-import { Canvas } from '@react-three/fiber';
+import { Float, PerspectiveCamera } from '@react-three/drei';
 import { Suspense } from 'react';
 import { CameraRig } from './CameraRig';
 import { HaloRings } from './HaloRings';
 import { LiquidOrb } from './LiquidOrb';
 import { OrbitingPearls } from './OrbitingPearls';
+import { SceneView } from './SceneView';
 import { StudioLights } from './StudioLights';
 
 export const SignatureScene = () => (
-  <Canvas dpr={[1, 2]} camera={{ position: [0, 0, 7], fov: 45 }} gl={{ antialias: true, alpha: true }}>
+  <SceneView>
+    <PerspectiveCamera makeDefault position={[0, 0, 7]} fov={45} />
     <Suspense fallback={null}>
       <StudioLights />
       <CameraRig distance={7} strength={0.8} />
@@ -18,5 +19,5 @@ export const SignatureScene = () => (
         <OrbitingPearls radius={2.4} />
       </Float>
     </Suspense>
-  </Canvas>
+  </SceneView>
 );

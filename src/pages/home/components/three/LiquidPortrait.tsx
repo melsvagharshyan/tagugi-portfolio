@@ -31,6 +31,7 @@ export const LiquidPortrait = ({ url }: LiquidPortraitProps) => {
     const { uniforms } = material;
     uniforms.uTime.value = clock.getElapsedTime();
     uniforms.uHover.value = MathUtils.damp(uniforms.uHover.value, hoverTarget.current, 3, delta);
+    uniforms.uReveal.value = MathUtils.damp(uniforms.uReveal.value, 1, 2.5, delta);
     uniforms.uPointer.value.lerp(pointerTarget, 1 - Math.exp(-8 * delta));
   });
 
@@ -48,6 +49,7 @@ export const LiquidPortrait = ({ url }: LiquidPortraitProps) => {
         uCover={cover}
         uAspect={planeAspect}
         toneMapped={false}
+        transparent
       />
     </mesh>
   );

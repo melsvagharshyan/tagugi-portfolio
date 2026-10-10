@@ -89,7 +89,6 @@ export const en = {
       'Feel free to explore my CV to learn more about my experience and skills!',
     ],
     downloadCv: 'Download my CV',
-    skillsHint: 'Drag to spin',
     rows: {
       experience: 'Experience',
       education: 'Education',

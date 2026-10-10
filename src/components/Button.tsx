@@ -20,10 +20,10 @@ type ButtonAsLink = BaseProps &
 export type ButtonProps = ButtonAsButton | ButtonAsLink;
 
 const VARIANTS: Record<Variant, string> = {
-  primary: 'bg-ink text-ivory hover:bg-wine',
-  outline: 'border border-ink/20 text-ink hover:border-ink hover:bg-ink hover:text-ivory',
+  primary: 'bg-rose text-ivory uppercase hover:bg-wine',
+  outline: 'border border-blush text-ink hover:border-rose hover:bg-rose hover:text-ivory',
   ghost: 'text-ink/80 hover:text-wine',
-  light: 'bg-ivory/80 text-ink border border-ink/10 backdrop-blur hover:bg-ivory hover:border-ink/30',
+  light: 'bg-ivory text-ink border border-blush hover:border-rose hover:text-wine',
 };
 
 const SIZES: Record<Size, string> = {

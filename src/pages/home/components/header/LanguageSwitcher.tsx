@@ -14,7 +14,7 @@ export const LanguageSwitcher = ({ tabIndex }: LanguageSwitcherProps) => {
     <div
       role="group"
       aria-label={t('common.language')}
-      className="flex w-fit shrink-0 flex-nowrap items-center gap-0.5 whitespace-nowrap rounded-full border border-ink/10 bg-ivory/70 p-1 backdrop-blur-xl"
+      className="flex w-fit shrink-0 flex-nowrap items-center gap-0.5 whitespace-nowrap rounded-full border border-ink/10 bg-ivory/95 p-1"
     >
       {languages.map((language) => {
         const active = language.code === current;

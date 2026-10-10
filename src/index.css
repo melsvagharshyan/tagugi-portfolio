@@ -1,18 +1,50 @@
 @import "tailwindcss";
 
-@theme {
-  --color-ivory: #faf6f2;
-  --color-sand: #f1e7de;
-  --color-nude: #e6d3c6;
-  --color-blush: #e9c9c3;
-  --color-rose: #b86b77;
-  --color-wine: #7a2e46;
-  --color-champagne: #c9a27e;
-  --color-ink: #2b2025;
-  --color-muted: #7b6a70;
+@font-face {
+  font-family: "Futura PT";
+  src: url("/fonts/FuturaPTLight.woff2") format("woff2");
+  font-weight: 300;
+  font-style: normal;
+  font-display: swap;
+}
 
-  --font-serif: "Playfair Display", "Noto Serif Armenian", ui-serif, Georgia, serif;
-  --font-sans: "Manrope", "Noto Sans Armenian", ui-sans-serif, system-ui, sans-serif;
+@font-face {
+  font-family: "Futura PT";
+  src: url("/fonts/FuturaPTMedium.woff2") format("woff2");
+  font-weight: 400 500;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Futura PT";
+  src: url("/fonts/FuturaPTBold.woff2") format("woff2");
+  font-weight: 600 700;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Futura PT";
+  src: url("/fonts/FuturaPTExtraBold.woff2") format("woff2");
+  font-weight: 800 900;
+  font-style: normal;
+  font-display: swap;
+}
+
+@theme {
+  --color-ivory: #ffffff;
+  --color-sand: #f7f7f7;
+  --color-nude: #eeeeee;
+  --color-blush: #ffe9ed;
+  --color-rose: #ffb6c1;
+  --color-wine: #cf6a79;
+  --color-champagne: #f4a3b1;
+  --color-ink: #333333;
+  --color-muted: #636363;
+
+  --font-sans: "Futura PT", "Noto Sans Armenian", Futura, ui-sans-serif, system-ui, sans-serif;
+  --font-serif: var(--font-sans);
 
   --animate-marquee: marquee 40s linear infinite;
   --animate-fade-up: fade-up 0.9s cubic-bezier(0.22, 1, 0.36, 1) both;
@@ -70,11 +102,6 @@
     background: var(--color-wine);
     color: var(--color-ivory);
   }
-}
-
-@utility grain {
-  background-image: radial-gradient(color-mix(in srgb, var(--color-ink) 7%, transparent) 1px, transparent 1px);
-  background-size: 4px 4px;
 }
 
 @media (prefers-reduced-motion: reduce) {

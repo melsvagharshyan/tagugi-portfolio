@@ -1,3 +1,4 @@
+import { lazy, Suspense, useRef } from 'react';
 import { AboutSection } from './components/AboutSection';
 import { ContactSection } from './components/ContactSection';
 import { CustomCursor } from './components/CustomCursor';
@@ -9,11 +10,14 @@ import { ProjectModal } from './components/ProjectModal';
 import { ProjectsSection } from './components/ProjectsSection';
 import { useProjectViewer } from './utils/hooks';
 
+const SceneRoot = lazy(() => import('./components/three/SceneRoot').then((module) => ({ default: module.SceneRoot })));
+
 const HomePage = () => {
   const { activeProject, open, close } = useProjectViewer();
+  const rootRef = useRef<HTMLDivElement>(null);
 
   return (
-    <div className="min-h-svh overflow-x-clip">
+    <div ref={rootRef} className="min-h-svh overflow-x-clip">
       <Header />
       <main>
         <Hero />
@@ -23,6 +27,9 @@ const HomePage = () => {
         <ContactSection />
       </main>
       <Footer />
+      <Suspense fallback={null}>
+        <SceneRoot eventSource={rootRef} />
+      </Suspense>
       <ProjectModal project={activeProject} onClose={close} />
       <CustomCursor />
     </div>

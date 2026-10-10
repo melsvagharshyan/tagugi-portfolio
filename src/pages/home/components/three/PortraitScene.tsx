@@ -1,15 +1,17 @@
-import { Canvas } from '@react-three/fiber';
+import { OrthographicCamera } from '@react-three/drei';
 import { Suspense } from 'react';
 import { LiquidPortrait } from './LiquidPortrait';
+import { SceneView } from './SceneView';
 
 interface PortraitSceneProps {
   url: string;
 }
 
 export const PortraitScene = ({ url }: PortraitSceneProps) => (
-  <Canvas dpr={[1, 2]} orthographic camera={{ position: [0, 0, 5], zoom: 1 }} gl={{ antialias: true, alpha: true }}>
+  <SceneView>
+    <OrthographicCamera makeDefault position={[0, 0, 5]} zoom={1} />
     <Suspense fallback={null}>
       <LiquidPortrait url={url} />
     </Suspense>
-  </Canvas>
+  </SceneView>
 );

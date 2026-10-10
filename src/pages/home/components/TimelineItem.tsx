@@ -4,20 +4,14 @@ import type { TimelineEntry } from '../utils/types';
 interface TimelineItemProps {
   entry: TimelineEntry;
   index: number;
-  reached: boolean;
 }
 
-export const TimelineItem = ({ entry, index, reached }: TimelineItemProps) => (
-  <li
-    className={`group relative border-b border-ink/10 py-6 transition-all duration-700 ease-[cubic-bezier(0.22,1,0.36,1)] last:border-b-0 ${
-      reached ? 'translate-x-0 opacity-100' : 'translate-x-3 opacity-35'
-    }`}
-  >
+export const TimelineItem = ({ entry, index }: TimelineItemProps) => (
+  <li className="group relative border-b border-ink/10 py-6 first:pt-0 last:border-b-0 last:pb-0">
     <span className="font-serif text-xs text-champagne italic">{formatIndex(index)}</span>
 
     <div className="mt-1 flex items-baseline justify-between gap-4 sm:gap-8">
       <h4
-        data-timeline-anchor
         className="min-w-0 font-serif text-2xl leading-tight tracking-tight text-ink transition-colors duration-300 group-hover:text-wine sm:text-[1.75rem]"
       >
         {entry.place}
@@ -29,7 +23,7 @@ export const TimelineItem = ({ entry, index, reached }: TimelineItemProps) => (
       {entry.roles.map((role) => (
         <li
           key={role}
-          className="rounded-full border border-ink/10 bg-ivory/70 px-3 py-1 text-xs font-medium tracking-wide text-muted backdrop-blur-sm transition-colors duration-300 group-hover:border-wine/30 group-hover:text-wine"
+          className="rounded-full border border-ink/10 bg-ivory/70 px-3 py-1 text-xs font-medium tracking-wide text-muted transition-colors duration-300 group-hover:border-wine/30 group-hover:text-wine"
         >
           {role}
         </li>

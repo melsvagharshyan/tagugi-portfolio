@@ -1,8 +1,9 @@
-import { lazy, Suspense, useState } from 'react';
+import { lazy, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { CAROUSEL, PROJECTS } from '../utils/constants';
 import { useScrollCarousel } from '../utils/hooks';
 import { CarouselInfo } from './CarouselInfo';
+import { DeferredScene } from './DeferredScene';
 
 const ProjectCarouselScene = lazy(() =>
   import('./three/ProjectCarouselScene').then((module) => ({ default: module.ProjectCarouselScene })),
@@ -21,22 +22,19 @@ export const ProjectCarousel = ({ onOpen }: ProjectCarouselProps) => {
   return (
     <div
       ref={containerRef}
-      className="relative"
+      className="relative bg-gradient-to-b from-ivory via-sand/50 to-ivory"
       style={{ height: `calc(${(PROJECTS.length - 1) * CAROUSEL.scrollPerCardSvh}svh + 100svh)` }}
     >
-      <div
-        data-cursor={hoveredSlug ? 'view' : undefined}
-        className="sticky top-0 h-svh overflow-hidden bg-gradient-to-b from-ivory via-sand/50 to-ivory"
-      >
+      <div data-cursor={hoveredSlug ? 'view' : undefined} className="sticky top-0 z-[2] h-svh overflow-hidden">
         <div className="absolute inset-0">
-          <Suspense fallback={null}>
+          <DeferredScene>
             <ProjectCarouselScene
               projects={PROJECTS}
               progressRef={progressRef}
               onSelect={onOpen}
               onHoverChange={setHoveredSlug}
             />
-          </Suspense>
+          </DeferredScene>
         </div>
 
         <p className="pointer-events-none absolute top-24 right-5 text-[0.65rem] sm:text-xs font-semibold tracking-[0.25em] text-muted uppercase sm:right-8">

@@ -19,7 +19,16 @@ const fragmentShader = /* glsl */ `
   uniform float uAspect;
   uniform float uHover;
   uniform float uTime;
+  uniform float uReveal;
   varying vec2 vUv;
+
+  // Matches the CSS arch (rounded-t-full): a semicircle of the frame's width capping a rectangle.
+  float archMask(vec2 uv) {
+    vec2 p = vec2(uv.x - 0.5, (1.0 - uv.y) / uAspect);
+    if (p.y > 0.5) return 1.0;
+    float d = length(p - vec2(0.0, 0.5));
+    return 1.0 - smoothstep(0.497, 0.5, d);
+  }
 
   void main() {
     vec2 delta = vUv - uPointer;
@@ -42,7 +51,7 @@ const fragmentShader = /* glsl */ `
     );
     color += vec3(1.0, 0.92, 0.88) * falloff * 0.07 * (wave * 0.5 + 0.5);
 
-    gl_FragColor = vec4(color, 1.0);
+    gl_FragColor = vec4(color, archMask(vUv) * uReveal);
     #include <colorspace_fragment>
   }
 `;
@@ -55,6 +64,7 @@ export const RippleMaterial = shaderMaterial(
     uAspect: 1,
     uHover: 0,
     uTime: 0,
+    uReveal: 0,
   },
   vertexShader,
   fragmentShader,

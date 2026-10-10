@@ -41,27 +41,9 @@ export interface ImageMaterialUniforms {
   zoom: number;
 }
 
-export interface DragSpinState {
-  x: number;
-  y: number;
-  velocityX: number;
-  velocityY: number;
-  dragging: boolean;
-}
-
-export interface TimelineLayout {
-  height: number;
-  anchors: number[];
-}
-
-export interface SilkRibbonConfig {
-  color: string;
-  position: [number, number, number];
-  rotation: [number, number, number];
-  width: number;
-  amplitude: number;
-  phase: number;
-  opacity: number;
+export interface SceneQuality {
+  lowPower: boolean;
+  dpr: [number, number];
 }
 
 export interface PearlConfig {

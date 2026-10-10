@@ -1,9 +1,10 @@
-import { lazy, Suspense } from 'react';
+import { lazy } from 'react';
 import { useTranslation } from 'react-i18next';
 import { FiArrowUpRight } from 'react-icons/fi';
 import { Button } from '../../../components/Button';
 import { CONTACT_ITEMS, OWNER } from '../utils/constants';
 import { ContactCard } from './ContactCard';
+import { DeferredScene } from './DeferredScene';
 import { Reveal } from './Reveal';
 import { RichText } from './RichText';
 
@@ -16,7 +17,7 @@ export const ContactSection = () => {
 
   return (
     <section id="contact" className="scroll-mt-16 px-3 py-20 sm:px-8 sm:py-24 md:py-36">
-      <div className="relative mx-auto grid max-w-7xl items-center gap-10 overflow-hidden rounded-[1.75rem] bg-gradient-to-br from-ink via-[#3d2530] to-wine px-6 py-10 text-ivory sm:rounded-[2rem] sm:p-12 lg:grid-cols-[7fr_5fr] lg:p-16">
+      <div className="relative mx-auto grid max-w-7xl items-center gap-10 overflow-hidden rounded-[1.75rem] bg-gradient-to-br from-ink via-[#5b4448] to-wine px-6 py-10 text-ivory sm:rounded-[2rem] sm:p-12 lg:grid-cols-[7fr_5fr] lg:p-16">
         <div className="relative z-10 min-w-0">
           <Reveal>
             <p className="flex items-center gap-3 text-xs font-semibold tracking-[0.3em] text-champagne uppercase">
@@ -45,9 +46,9 @@ export const ContactSection = () => {
         </div>
 
         <div className="relative -mx-6 h-64 min-w-0 sm:mx-0 sm:h-[26rem] lg:h-[34rem]">
-          <Suspense fallback={null}>
+          <DeferredScene>
             <SignatureScene />
-          </Suspense>
+          </DeferredScene>
         </div>
       </div>
     </section>

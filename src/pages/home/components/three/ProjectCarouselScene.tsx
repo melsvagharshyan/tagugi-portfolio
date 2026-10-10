@@ -1,7 +1,8 @@
-import { Canvas } from '@react-three/fiber';
+import { PerspectiveCamera } from '@react-three/drei';
 import { Suspense, type RefObject } from 'react';
 import type { Project } from '../../utils/types';
 import { CarouselRing } from './CarouselRing';
+import { SceneView } from './SceneView';
 
 interface ProjectCarouselSceneProps {
   projects: Project[];
@@ -11,9 +12,10 @@ interface ProjectCarouselSceneProps {
 }
 
 export const ProjectCarouselScene = (props: ProjectCarouselSceneProps) => (
-  <Canvas dpr={[1, 2]} camera={{ position: [0, 0, 8], fov: 40 }} gl={{ antialias: true, alpha: true }}>
+  <SceneView>
+    <PerspectiveCamera makeDefault position={[0, 0, 8]} fov={40} />
     <Suspense fallback={null}>
       <CarouselRing {...props} />
     </Suspense>
-  </Canvas>
+  </SceneView>
 );

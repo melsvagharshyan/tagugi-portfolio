@@ -1,10 +1,9 @@
 import { useTranslation } from 'react-i18next';
-import { AboutBackdrop } from './AboutBackdrop';
+import { SKILLS } from '../utils/constants';
 import { AboutIntro } from './AboutIntro';
 import { ResumeRow } from './ResumeRow';
 import { RichText } from './RichText';
 import { SectionTitle } from './SectionTitle';
-import { SkillsShowcase } from './SkillsShowcase';
 import { TagList } from './TagList';
 import { TimelineList } from './TimelineList';
 
@@ -12,8 +11,7 @@ export const AboutSection = () => {
   const { t } = useTranslation();
 
   return (
-    <section id="about" className="relative isolate scroll-mt-16 bg-sand/60 px-5 py-20 sm:px-8 sm:py-24 md:py-36">
-      <AboutBackdrop />
+    <section id="about" className="scroll-mt-16 bg-sand px-5 py-20 sm:px-8 sm:py-24 md:py-36">
       <div className="mx-auto max-w-7xl">
         <SectionTitle index="02" eyebrow={t('about.eyebrow')} title={<RichText i18nKey="about.title" />} />
 
@@ -32,7 +30,7 @@ export const AboutSection = () => {
             <TimelineList entries={t('about.practice', { returnObjects: true })} />
           </ResumeRow>
           <ResumeRow label={t('about.rows.skills')}>
-            <SkillsShowcase />
+            <TagList items={SKILLS} />
           </ResumeRow>
           <ResumeRow label={t('about.rows.languages')}>
             <TagList items={t('about.languages', { returnObjects: true })} />

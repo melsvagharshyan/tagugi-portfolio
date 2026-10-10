@@ -1,28 +1,22 @@
-import { lazy, Suspense, useRef } from 'react';
+import { lazy } from 'react';
 import { useTranslation } from 'react-i18next';
 import { FiArrowDownRight, FiArrowUpRight } from 'react-icons/fi';
 import { Button } from '../../../components/Button';
+import { DeferredScene } from './DeferredScene';
 import { RichText } from './RichText';
 
 const HeroScene = lazy(() => import('./three/HeroScene').then((module) => ({ default: module.HeroScene })));
 
 export const Hero = () => {
   const { t } = useTranslation();
-  const sectionRef = useRef<HTMLElement>(null);
   const disciplines = t('hero.disciplines', { returnObjects: true });
 
   return (
-    <section
-      id="top"
-      ref={sectionRef}
-      className="relative isolate flex min-h-svh flex-col overflow-hidden bg-gradient-to-br from-ivory via-sand to-blush/60"
-    >
-      <div className="grain absolute inset-0 -z-10 opacity-40" />
-
-      <div className="absolute inset-0 z-0">
-        <Suspense fallback={null}>
-          <HeroScene eventSource={sectionRef} />
-        </Suspense>
+    <section id="top" className="relative flex min-h-svh flex-col overflow-hidden bg-sand">
+      <div className="absolute inset-0">
+        <DeferredScene>
+          <HeroScene />
+        </DeferredScene>
       </div>
 
       <div className="pointer-events-none relative z-10 mx-auto flex w-full max-w-7xl flex-1 flex-col px-5 pt-28 pb-[36svh] sm:px-8 sm:pt-32 sm:pb-[38svh] landscape:justify-center landscape:pb-28">
