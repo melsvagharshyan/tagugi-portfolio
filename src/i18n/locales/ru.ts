@@ -62,7 +62,6 @@ export const ru: Translation = {
     open: 'Открыть проект',
     previous: 'Предыдущий проект',
     next: 'Следующий проект',
-    scrollHint: 'Прокрутите, чтобы вращать',
     close: 'Закрыть проект',
     media,
     categories: {

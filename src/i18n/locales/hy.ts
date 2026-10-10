@@ -58,7 +58,6 @@ export const hy: Translation = {
     open: 'Բացել նախագիծը',
     previous: 'Նախորդ նախագիծը',
     next: 'Հաջորդ նախագիծը',
-    scrollHint: 'Ոլորեք՝ պտտելու համար',
     close: 'Փակել նախագիծը',
     media,
     categories: {

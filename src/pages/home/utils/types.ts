@@ -35,19 +35,9 @@ export interface ContactItem {
 
 export type CursorVariant = 'default' | 'link' | 'view' | 'hidden';
 
-export interface ImageMaterialUniforms {
-  opacity: number;
-  grayscale: number;
-  zoom: number;
-}
-
-export interface SceneQuality {
-  lowPower: boolean;
-  dpr: [number, number];
-}
-
-export interface PearlConfig {
-  position: [number, number, number];
-  scale: number;
-  color: string;
+export interface OrbPearl {
+  top: string;
+  left: string;
+  size: string;
+  delay: number;
 }

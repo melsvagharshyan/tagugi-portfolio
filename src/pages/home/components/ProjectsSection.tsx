@@ -1,5 +1,5 @@
 import { useTranslation } from 'react-i18next';
-import { ProjectCarousel } from './ProjectCarousel';
+import { ProjectSwiper } from './ProjectSwiper';
 import { RichText } from './RichText';
 import { SectionTitle } from './SectionTitle';
 
@@ -21,7 +21,7 @@ export const ProjectsSection = ({ onOpen }: ProjectsSectionProps) => {
         />
       </div>
 
-      <ProjectCarousel onOpen={onOpen} />
+      <ProjectSwiper onOpen={onOpen} />
     </section>
   );
 };

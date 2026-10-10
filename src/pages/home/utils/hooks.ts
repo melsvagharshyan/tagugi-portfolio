@@ -1,3 +1,4 @@
+import { animate, useMotionValue, type PanInfo } from 'motion/react';
 import {
   useCallback,
   useEffect,
@@ -13,8 +14,9 @@ import {
   HEADER_HIDE_AFTER,
   HEADER_SCROLL_OFFSET,
   PROJECTS,
+  SWIPER,
 } from './constants';
-import { getSceneQuality, getScrollProgress } from './helpers';
+import { getSwiperCardWidth } from './helpers';
 import type { CursorVariant, Project } from './types';
 
 const getCursorVariant = (target: EventTarget | null): CursorVariant => {
@@ -141,7 +143,42 @@ export const useInView = <T extends Element>(threshold = 0.15, rootMargin = '0px
   return { ref, inView };
 };
 
-export const useSceneQuality = () => useState(getSceneQuality)[0];
+export const useSwipeCarousel = <T extends HTMLElement>(count: number) => {
+  const viewportRef = useRef<T>(null);
+  const x = useMotionValue(0);
+  const [index, setIndex] = useState(0);
+  const [cardWidth, setCardWidth] = useState(0);
+  const step = cardWidth + SWIPER.gap;
+
+  useEffect(() => {
+    const node = viewportRef.current;
+    if (!node) return;
+    const observer = new ResizeObserver(([entry]) => setCardWidth(getSwiperCardWidth(entry.contentRect.width)));
+    observer.observe(node);
+    return () => observer.disconnect();
+  }, []);
+
+  useEffect(() => {
+    const controls = animate(x, -index * step, SWIPER.spring);
+    return () => controls.stop();
+  }, [index, step, x]);
+
+  const goTo = useCallback(
+    (next: number) => {
+      const clamped = Math.min(count - 1, Math.max(0, next));
+      setIndex(clamped);
+      if (clamped === index) animate(x, -clamped * step, SWIPER.spring);
+    },
+    [count, index, step, x],
+  );
+
+  const handleDragEnd = (_event: MouseEvent | TouchEvent | PointerEvent, { offset, velocity }: PanInfo) => {
+    const swipe = offset.x + velocity.x * SWIPER.velocityFactor;
+    goTo(index - Math.round(swipe / step));
+  };
+
+  return { viewportRef, x, index, cardWidth, goTo, handleDragEnd, minX: -(count - 1) * step };
+};
 
 export const useHeaderScroll = (locked: boolean) => {
   const progressRef = useRef<HTMLDivElement>(null);
@@ -241,41 +278,4 @@ export const useLanguage = () => {
   const change = useCallback((code: LanguageCode) => void i18n.changeLanguage(code), [i18n]);
 
   return { current, change, languages: LANGUAGES };
-};
-
-export const useScrollCarousel = <T extends HTMLElement>(count: number) => {
-  const containerRef = useRef<T>(null);
-  const progressRef = useRef(0);
-  const [activeIndex, setActiveIndex] = useState(0);
-
-  useEffect(() => {
-    const update = () => {
-      const node = containerRef.current;
-      if (!node) return;
-      const progress = getScrollProgress(node);
-      progressRef.current = progress;
-      setActiveIndex(Math.round(progress * (count - 1)));
-    };
-
-    update();
-    window.addEventListener('scroll', update, { passive: true });
-    window.addEventListener('resize', update);
-    return () => {
-      window.removeEventListener('scroll', update);
-      window.removeEventListener('resize', update);
-    };
-  }, [count]);
-
-  const scrollToIndex = useCallback(
-    (index: number) => {
-      const node = containerRef.current;
-      if (!node) return;
-      const scrollable = node.offsetHeight - window.innerHeight;
-      const top = node.getBoundingClientRect().top + window.scrollY;
-      window.scrollTo({ top: top + (scrollable * index) / Math.max(1, count - 1), behavior: 'smooth' });
-    },
-    [count],
-  );
-
-  return { containerRef, progressRef, activeIndex, scrollToIndex };
 };

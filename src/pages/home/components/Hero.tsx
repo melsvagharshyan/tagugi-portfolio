@@ -1,11 +1,8 @@
-import { lazy } from 'react';
 import { useTranslation } from 'react-i18next';
 import { FiArrowDownRight, FiArrowUpRight } from 'react-icons/fi';
 import { Button } from '../../../components/Button';
-import { DeferredScene } from './DeferredScene';
+import { PearlOrb } from './PearlOrb';
 import { RichText } from './RichText';
-
-const HeroScene = lazy(() => import('./three/HeroScene').then((module) => ({ default: module.HeroScene })));
 
 export const Hero = () => {
   const { t } = useTranslation();
@@ -13,10 +10,8 @@ export const Hero = () => {
 
   return (
     <section id="top" className="relative flex min-h-svh flex-col overflow-hidden bg-sand">
-      <div className="absolute inset-0">
-        <DeferredScene>
-          <HeroScene />
-        </DeferredScene>
+      <div className="absolute inset-x-0 bottom-[3svh] flex justify-center landscape:hidden xl:landscape:inset-y-0 xl:landscape:right-[5%] xl:landscape:left-auto xl:landscape:flex xl:landscape:items-center">
+        <PearlOrb className="w-[min(72vw,22rem)] xl:w-[min(36vw,32rem)]" />
       </div>
 
       <div className="pointer-events-none relative z-10 mx-auto flex w-full max-w-7xl flex-1 flex-col px-5 pt-28 pb-[36svh] sm:px-8 sm:pt-32 sm:pb-[38svh] landscape:justify-center landscape:pb-28">

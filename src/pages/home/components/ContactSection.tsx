@@ -1,16 +1,11 @@
-import { lazy } from 'react';
 import { useTranslation } from 'react-i18next';
 import { FiArrowUpRight } from 'react-icons/fi';
 import { Button } from '../../../components/Button';
 import { CONTACT_ITEMS, OWNER } from '../utils/constants';
 import { ContactCard } from './ContactCard';
-import { DeferredScene } from './DeferredScene';
+import { PearlOrb } from './PearlOrb';
 import { Reveal } from './Reveal';
 import { RichText } from './RichText';
-
-const SignatureScene = lazy(() =>
-  import('./three/SignatureScene').then((module) => ({ default: module.SignatureScene })),
-);
 
 export const ContactSection = () => {
   const { t } = useTranslation();
@@ -45,11 +40,7 @@ export const ContactSection = () => {
           </Reveal>
         </div>
 
-        <div className="relative -mx-6 h-64 min-w-0 sm:mx-0 sm:h-[26rem] lg:h-[34rem]">
-          <DeferredScene>
-            <SignatureScene />
-          </DeferredScene>
-        </div>
+        <PearlOrb className="mx-auto w-[min(64vw,18rem)] lg:w-full lg:max-w-[26rem]" ringClassName="border-blush/50" />
       </div>
     </section>
   );

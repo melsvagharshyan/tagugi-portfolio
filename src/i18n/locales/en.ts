@@ -56,7 +56,6 @@ export const en = {
     open: 'Open project',
     previous: 'Previous project',
     next: 'Next project',
-    scrollHint: 'Scroll to rotate',
     close: 'Close project',
     media,
     categories: {

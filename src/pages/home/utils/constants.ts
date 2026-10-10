@@ -1,4 +1,4 @@
-import type { ContactItem, NavLink, PearlConfig, Project } from './types';
+import type { ContactItem, NavLink, OrbPearl, Project } from './types';
 
 const CDN = 'https://cdn.prod.website-files.com/6a43afeaaaec0bbbf56551b1';
 
@@ -47,49 +47,28 @@ export const CONTACT_ITEMS: ContactItem[] = [
   { kind: 'linkedin', value: 'Taguhi Hartenian', href: OWNER.linkedin },
 ];
 
-export const CAROUSEL = {
-  scrollPerCardSvh: 65,
-  cardAspect: 1.25,
-  cardGap: 1.22,
-  tilt: 0.1,
-  damping: 4,
-};
-
-export const HERO_SCROLL = {
-  orbLift: 0.45,
-  orbShrink: 0.25,
-  pearlSpread: 0.7,
-};
-
-export const PORTRAIT_RIPPLE = {
-  frequency: 26,
-  speed: 4,
-  strength: 0.014,
-  chroma: 0.005,
-};
-
 export const CURSOR_TRAIL_EASE = 0.16;
 
 export const CURSOR_INTERACTIVE_SELECTOR = '[data-cursor], a, button, [role="button"]';
 
-export const SCENE_COLORS = {
-  pearl: '#fff1f4',
-  blush: '#ffd6de',
-  rose: '#ffb6c1',
-  wine: '#cf6a79',
-  champagne: '#f2b8c3',
-  ivory: '#ffffff',
-};
+export const SWIPER = {
+  /** Card width as a share of the viewport; checked from widest screen down. */
+  breakpoints: [
+    { minWidth: 1024, ratio: 0.36 },
+    { minWidth: 640, ratio: 0.5 },
+    { minWidth: 0, ratio: 0.8 },
+  ],
+  gap: 16,
+  velocityFactor: 0.2,
+  spring: { type: 'spring', stiffness: 260, damping: 32 },
+} as const;
 
-export const FLOATING_PEARLS: PearlConfig[] = [
-  { position: [-4.6, 2.1, -2.5], scale: 0.32, color: SCENE_COLORS.pearl },
-  { position: [4.9, -2.5, -1.5], scale: 0.26, color: SCENE_COLORS.blush },
-  { position: [5.6, 2.3, -3], scale: 0.36, color: SCENE_COLORS.pearl },
-  { position: [-0.6, -3.2, -2.5], scale: 0.22, color: SCENE_COLORS.blush },
-  { position: [-5.8, -0.4, -4], scale: 0.42, color: SCENE_COLORS.pearl },
+export const ORB_PEARLS: OrbPearl[] = [
+  { top: '12%', left: '4%', size: '11%', delay: 0 },
+  { top: '70%', left: '10%', size: '8%', delay: 1.2 },
+  { top: '22%', left: '86%', size: '9%', delay: 0.6 },
+  { top: '78%', left: '80%', size: '6%', delay: 1.8 },
 ];
-
-export const SCENE_MOUNT_MARGIN = '300px 0px';
 
 export const PROJECTS: Project[] = [
   {
