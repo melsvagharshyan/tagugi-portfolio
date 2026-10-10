@@ -1,4 +1,5 @@
 import { useTranslation } from 'react-i18next';
+import { AboutBackdrop } from './AboutBackdrop';
 import { AboutIntro } from './AboutIntro';
 import { ResumeRow } from './ResumeRow';
 import { RichText } from './RichText';
@@ -11,7 +12,8 @@ export const AboutSection = () => {
   const { t } = useTranslation();
 
   return (
-    <section id="about" className="scroll-mt-16 bg-sand/60 px-5 py-20 sm:px-8 sm:py-24 md:py-36">
+    <section id="about" className="relative isolate scroll-mt-16 bg-sand/60 px-5 py-20 sm:px-8 sm:py-24 md:py-36">
+      <AboutBackdrop />
       <div className="mx-auto max-w-7xl">
         <SectionTitle index="02" eyebrow={t('about.eyebrow')} title={<RichText i18nKey="about.title" />} />
 

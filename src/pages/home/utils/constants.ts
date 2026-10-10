@@ -1,4 +1,4 @@
-import type { ContactItem, NavLink, PearlConfig, Project } from './types';
+import type { ContactItem, NavLink, PearlConfig, Project, SilkRibbonConfig } from './types';
 
 const CDN = 'https://cdn.prod.website-files.com/6a43afeaaaec0bbbf56551b1';
 
@@ -98,6 +98,25 @@ export const FLOATING_PEARLS: PearlConfig[] = [
   { position: [-0.6, -3.2, -2.5], scale: 0.22, color: SCENE_COLORS.pearl },
   { position: [6.6, 0.1, -5], scale: 0.48, color: SCENE_COLORS.blush },
 ];
+
+export const SILK_RIBBONS: SilkRibbonConfig[] = [
+  { color: SCENE_COLORS.champagne, position: [-1, 2.2, -2], rotation: [0, 0, -0.18], width: 0.9, amplitude: 0.7, phase: 0, opacity: 0.55 },
+  { color: SCENE_COLORS.blush, position: [1.5, -0.4, -3], rotation: [0.2, 0, 0.12], width: 1.3, amplitude: 0.9, phase: 2.1, opacity: 0.5 },
+  { color: SCENE_COLORS.rose, position: [0, -2.6, -2.5], rotation: [-0.1, 0, -0.08], width: 0.6, amplitude: 0.6, phase: 4.2, opacity: 0.35 },
+];
+
+export const ABOUT_PEARLS: PearlConfig[] = [
+  { position: [-5.4, 2.6, -1.5], scale: 0.28, color: SCENE_COLORS.pearl },
+  { position: [5.2, 1.4, -2], scale: 0.4, color: SCENE_COLORS.blush },
+  { position: [-4.2, -2.8, -3], scale: 0.34, color: SCENE_COLORS.champagne },
+  { position: [4.4, -3, -1], scale: 0.2, color: SCENE_COLORS.pearl },
+  { position: [0.8, 3.4, -4], scale: 0.24, color: SCENE_COLORS.pearl },
+];
+
+export const ABOUT_SCROLL = {
+  ribbonTravel: 3,
+  pearlParallax: 4,
+};
 
 export const PROJECTS: Project[] = [
   {

@@ -49,6 +49,16 @@ export interface DragSpinState {
   dragging: boolean;
 }
 
+export interface SilkRibbonConfig {
+  color: string;
+  position: [number, number, number];
+  rotation: [number, number, number];
+  width: number;
+  amplitude: number;
+  phase: number;
+  opacity: number;
+}
+
 export interface PearlConfig {
   position: [number, number, number];
   scale: number;

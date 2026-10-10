@@ -235,6 +235,31 @@ export const useLanguage = () => {
   return { current, change, languages: LANGUAGES };
 };
 
+export const useScrollScene = <T extends HTMLElement>() => {
+  const containerRef = useRef<T>(null);
+  const progressRef = useRef(0);
+  const [visible, setVisible] = useState(false);
+
+  useEffect(() => {
+    const node = containerRef.current;
+    if (!node) return;
+    const update = () => {
+      progressRef.current = getScrollProgress(node);
+    };
+    const observer = new IntersectionObserver(([entry]) => setVisible(entry.isIntersecting));
+
+    update();
+    observer.observe(node);
+    window.addEventListener('scroll', update, { passive: true });
+    return () => {
+      observer.disconnect();
+      window.removeEventListener('scroll', update);
+    };
+  }, []);
+
+  return { containerRef, progressRef, visible };
+};
+
 export const useDragSpin = () => {
   const stateRef = useRef<DragSpinState>({ x: 0, y: 0, velocityX: 0, velocityY: 0, dragging: false });
   const lastRef = useRef({ x: 0, y: 0 });
