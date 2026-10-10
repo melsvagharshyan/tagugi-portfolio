@@ -41,7 +41,7 @@ export const Hero = () => {
             <Button href="#projects" size="lg" icon={<FiArrowDownRight />} className="w-full sm:w-auto">
               {t('hero.viewWork')}
             </Button>
-            <Button href="#about" variant="light" size="lg" className="w-full sm:w-auto">
+            <Button href="#about" variant="glass" size="lg" className="w-full sm:w-auto">
               {t('hero.aboutMe')}
               <FiArrowUpRight />
             </Button>

@@ -1,6 +1,6 @@
 import type { AnchorHTMLAttributes, ButtonHTMLAttributes, ReactNode } from 'react';
 
-type Variant = 'primary' | 'outline' | 'ghost' | 'light';
+type Variant = 'primary' | 'outline' | 'ghost' | 'light' | 'glass' | 'glassDark';
 type Size = 'xs' | 'sm' | 'md' | 'lg' | 'icon';
 
 interface BaseProps {
@@ -24,6 +24,8 @@ const VARIANTS: Record<Variant, string> = {
   outline: 'border border-blush text-ink hover:border-rose hover:bg-rose hover:text-ivory',
   ghost: 'text-ink/80 hover:text-wine',
   light: 'bg-ivory text-ink border border-blush hover:border-rose hover:text-wine',
+  glass: 'glass text-ink hover:bg-ivory/80 hover:text-wine',
+  glassDark: 'glass-dark text-ivory hover:bg-ivory hover:text-ink',
 };
 
 const SIZES: Record<Size, string> = {

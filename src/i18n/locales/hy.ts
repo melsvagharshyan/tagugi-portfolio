@@ -33,6 +33,10 @@ export const hy: Translation = {
     closeMenu: 'Փակել ընտրացանկը',
     ringText: 'Գրաֆիկ դիզայներ · Կոնցեպտ արտիստ · ',
   },
+  welcome: {
+    title: 'Բարի գալուստ',
+    subtitle: 'Թագուհի Հարթենյան · Պորտֆոլիո',
+  },
   hero: {
     eyebrow: 'Գրաֆիկ դիզայներ և կոնցեպտ արտիստ',
     title: 'Բարև, ես <em>Թագուհին</em> եմ՝ ավագ գրաֆիկ դիզայներ Հայաստանից, ով ստեղծում է աչքի ընկնող վիզուալներ։',
@@ -56,8 +60,6 @@ export const hy: Translation = {
     title: 'Ընտրված <em>աշխատանքներ</em>',
     view: 'Դիտել',
     open: 'Բացել նախագիծը',
-    previous: 'Նախորդ նախագիծը',
-    next: 'Հաջորդ նախագիծը',
     close: 'Փակել նախագիծը',
     media,
     categories: {
@@ -97,7 +99,9 @@ export const hy: Translation = {
       skills: 'Հմտություններ',
       languages: 'Լեզուներ',
     },
-    languages: ['Հայերեն', 'Ռուսերեն', 'Անգլերեն'],
+    languages: { hy: 'Հայերեն', ru: 'Ռուսերեն', en: 'Անգլերեն' },
+    skillGroups: { design: 'Դիզայն և իլյուստրացիա', threeD: '3D և real-time', motion: 'Անիմացիա' },
+    tools: '{{count}} գործիք',
     experience: [
       { place: 'Gotcha / and m[ ]re', period: '2025 - 2026', roles: ['Գրաֆիկ դիզայներ'] },
       { place: 'Neka Group', period: '2024 - 2025', roles: ['Գրաֆիկ դիզայներ'] },

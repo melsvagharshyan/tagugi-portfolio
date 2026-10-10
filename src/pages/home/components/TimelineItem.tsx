@@ -1,35 +1,26 @@
-import { formatIndex } from '../utils/helpers';
 import type { TimelineEntry } from '../utils/types';
 
 interface TimelineItemProps {
   entry: TimelineEntry;
-  index: number;
 }
 
-export const TimelineItem = ({ entry, index }: TimelineItemProps) => (
-  <li className="group relative border-b border-ink/10 py-6 first:pt-0 last:border-b-0 last:pb-0">
-    <span className="font-serif text-xs text-champagne italic">{formatIndex(index)}</span>
+export const TimelineItem = ({ entry }: TimelineItemProps) => (
+  <li className="group relative pb-8 pl-9 last:pb-0">
+    <span
+      aria-hidden
+      className="absolute top-3 bottom-0 left-[7px] w-px bg-gradient-to-b from-rose to-rose/10 group-last:hidden"
+    />
+    <span
+      aria-hidden
+      className="absolute top-1.5 left-0 h-[15px] w-[15px] rounded-full bg-[radial-gradient(circle_at_35%_30%,#ffffff,#ffb6c1_55%,#cf6a79)] ring-4 ring-blush transition-transform duration-500 ease-[cubic-bezier(0.22,1,0.36,1)] group-hover:scale-125"
+    />
 
-    <div className="mt-1 flex items-baseline justify-between gap-4 sm:gap-8">
-      <h4
-        className="min-w-0 font-serif text-2xl leading-tight tracking-tight text-ink transition-colors duration-300 group-hover:text-wine sm:text-[1.75rem]"
-      >
-        {entry.place}
-      </h4>
-      <span className="font-serif text-base whitespace-nowrap text-wine italic sm:text-xl">{entry.period}</span>
-    </div>
-
-    <ul className="mt-3 flex flex-wrap gap-1.5">
-      {entry.roles.map((role) => (
-        <li
-          key={role}
-          className="rounded-full border border-ink/10 bg-ivory/70 px-3 py-1 text-xs font-medium tracking-wide text-muted transition-colors duration-300 group-hover:border-wine/30 group-hover:text-wine"
-        >
-          {role}
-        </li>
-      ))}
-    </ul>
-
-    <span className="pointer-events-none absolute inset-x-0 -bottom-px h-px origin-left scale-x-0 bg-gradient-to-r from-wine via-rose to-transparent transition-transform duration-700 ease-[cubic-bezier(0.22,1,0.36,1)] group-hover:scale-x-100" />
+    <span className="inline-block rounded-full bg-blush px-3 py-1 text-[0.7rem] font-semibold tracking-[0.18em] text-wine uppercase">
+      {entry.period}
+    </span>
+    <h4 className="mt-3 font-serif text-2xl leading-tight tracking-tight text-ink transition-colors duration-300 group-hover:text-wine sm:text-[1.75rem]">
+      {entry.place}
+    </h4>
+    <p className="mt-1.5 text-sm text-muted">{entry.roles.join(' · ')}</p>
   </li>
 );

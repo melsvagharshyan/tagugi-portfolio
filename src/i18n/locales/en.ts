@@ -31,6 +31,10 @@ export const en = {
     closeMenu: 'Close menu',
     ringText: 'Graphic Designer · Concept Artist · ',
   },
+  welcome: {
+    title: 'Welcome',
+    subtitle: 'Taguhi Hartenian · Portfolio',
+  },
   hero: {
     eyebrow: 'Graphic Designer & Concept Artist',
     title: 'Hi, I’m <em>Taguhi</em> — a Senior Graphic Designer from Armenia, creating visuals that stand out.',
@@ -54,8 +58,6 @@ export const en = {
     title: 'Selected <em>work</em>',
     view: 'View',
     open: 'Open project',
-    previous: 'Previous project',
-    next: 'Next project',
     close: 'Close project',
     media,
     categories: {
@@ -93,9 +95,11 @@ export const en = {
       education: 'Education',
       practice: 'Practice',
       skills: 'Skills',
-      languages: 'Language',
+      languages: 'Languages',
     },
-    languages: ['Armenian', 'Russian', 'English'],
+    languages: { hy: 'Armenian', ru: 'Russian', en: 'English' },
+    skillGroups: { design: 'Design & Illustration', threeD: '3D & Real-time', motion: 'Motion' },
+    tools: '{{count}} tools',
     experience: [
       { place: 'Gotcha / and m[ ]re', period: '2025 - 2026', roles: ['Graphic Designer'] },
       { place: 'Neka Group', period: '2024 - 2025', roles: ['Graphic Designer'] },

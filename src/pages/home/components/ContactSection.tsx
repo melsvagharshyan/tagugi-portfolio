@@ -33,14 +33,14 @@ export const ContactSection = () => {
           </Reveal>
 
           <Reveal delay={250}>
-            <Button href={`mailto:${OWNER.email}`} variant="light" size="lg" className="mt-10">
+            <Button href={`mailto:${OWNER.email}`} variant="glassDark" size="lg" className="mt-10">
               {t('contact.startProject')}
               <FiArrowUpRight />
             </Button>
           </Reveal>
         </div>
 
-        <PearlOrb className="mx-auto w-[min(64vw,18rem)] lg:w-full lg:max-w-[26rem]" ringClassName="border-blush/50" />
+        <PearlOrb className="relative mx-auto w-[min(64vw,18rem)] lg:w-full lg:max-w-[26rem]" ringClassName="border-blush/50" />
       </div>
     </section>
   );

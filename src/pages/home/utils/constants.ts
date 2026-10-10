@@ -1,14 +1,27 @@
-import type { ContactItem, NavLink, OrbPearl, Project } from './types';
-
-const CDN = 'https://cdn.prod.website-files.com/6a43afeaaaec0bbbf56551b1';
+import {
+  TbBrandAdobeAfterEffect,
+  TbBrandAdobeIllustrator,
+  TbBrandAdobePhotoshop,
+  TbBrandBlender,
+  TbBrandFigma,
+  TbBrandUnity,
+  TbBrush,
+  TbChisel,
+  TbCube,
+  TbCube3dSphere,
+  TbMovie,
+  TbTexture,
+} from 'react-icons/tb';
+import type { LanguageCode } from '../../../i18n/languages';
+import type { ContactItem, NavLink, OrbPearl, Project, SkillGroup } from './types';
 
 export const OWNER = {
   email: 'taguhi.hartenian@gmail.com',
   phone: '+374 98 48 41 12',
   behance: 'https://www.behance.net/taguhihartenian',
   linkedin: 'https://www.linkedin.com/in/taguhi-hartenian-a8734126a/',
-  cv: `${CDN}/6a4bb655db246e87cac483f0_44ed8b7a4b783c26466e1a2bad060f66_CV_PORTFOLIO_TAGUHI.pdf`,
-  photo: `${CDN}/6a4525f94bb55d76b43b9c86_1a89b303a923967132e7661c7cb9fdec_Screenshot%202026-07-01%20183518.jpg`,
+  cv: '/files/taguhi-hartenian-cv.pdf',
+  photo: '/images/owner/portrait.webp',
 } as const;
 
 export const NAV_LINKS: NavLink[] = [
@@ -25,20 +38,39 @@ export const HEADER_HIDE_AFTER = 480;
 
 export const MONOGRAM_INITIALS = 'TH';
 
-export const SKILLS = [
-  'Adobe Substance Painter',
-  'Adobe After Effects',
-  'Adobe Illustrator',
-  'Adobe Photoshop',
-  'Adobe Dimension',
-  '3Ds Max',
-  'Blender',
-  'Zbrush',
-  'Unity',
-  'Figma',
-  'Procreate Dreams',
-  'Procreate',
+export const SKILL_GROUPS: SkillGroup[] = [
+  {
+    id: 'design',
+    skills: [
+      { name: 'Adobe Illustrator', icon: TbBrandAdobeIllustrator },
+      { name: 'Adobe Photoshop', icon: TbBrandAdobePhotoshop },
+      { name: 'Figma', icon: TbBrandFigma },
+      { name: 'Procreate', icon: TbBrush },
+    ],
+  },
+  {
+    id: 'threeD',
+    skills: [
+      { name: 'Blender', icon: TbBrandBlender },
+      { name: '3Ds Max', icon: TbCube3dSphere },
+      { name: 'Zbrush', icon: TbChisel },
+      { name: 'Adobe Substance Painter', icon: TbTexture },
+      { name: 'Adobe Dimension', icon: TbCube },
+      { name: 'Unity', icon: TbBrandUnity },
+    ],
+  },
+  {
+    id: 'motion',
+    skills: [
+      { name: 'Adobe After Effects', icon: TbBrandAdobeAfterEffect },
+      { name: 'Procreate Dreams', icon: TbMovie },
+    ],
+  },
 ];
+
+export const SKILL_COUNT = SKILL_GROUPS.reduce((total, group) => total + group.skills.length, 0);
+
+export const SPOKEN_LANGUAGES: LanguageCode[] = ['hy', 'ru', 'en'];
 
 export const CONTACT_ITEMS: ContactItem[] = [
   { kind: 'email', value: OWNER.email, href: `mailto:${OWNER.email}` },
@@ -47,20 +79,26 @@ export const CONTACT_ITEMS: ContactItem[] = [
   { kind: 'linkedin', value: 'Taguhi Hartenian', href: OWNER.linkedin },
 ];
 
+export const WELCOME = {
+  storageKey: 'taguhi-portfolio-welcomed',
+  duration: 2600,
+  letterStagger: 0.07,
+  ease: [0.76, 0, 0.24, 1],
+} as const;
+
 export const CURSOR_TRAIL_EASE = 0.16;
 
 export const CURSOR_INTERACTIVE_SELECTOR = '[data-cursor], a, button, [role="button"]';
 
-export const SWIPER = {
-  /** Card width as a share of the viewport; checked from widest screen down. */
-  breakpoints: [
-    { minWidth: 1024, ratio: 0.36 },
-    { minWidth: 640, ratio: 0.5 },
-    { minWidth: 0, ratio: 0.8 },
-  ],
-  gap: 16,
-  velocityFactor: 0.2,
-  spring: { type: 'spring', stiffness: 260, damping: 32 },
+/** Drops the middle column (lg) or every second tile (sm) to give the grid a staggered rhythm. */
+export const PROJECT_GRID_STAGGER =
+  'sm:[&>*:nth-child(even)]:translate-y-20 lg:[&>*:nth-child(3n+1)]:translate-y-0 lg:[&>*:nth-child(3n+2)]:translate-y-28 lg:[&>*:nth-child(3n)]:translate-y-0';
+
+export const PROJECT_TILE_REVEAL = {
+  hidden: { opacity: 0, y: 48 },
+  shown: { opacity: 1, y: 0 },
+  transition: { duration: 0.9, ease: [0.22, 1, 0.36, 1] },
+  stagger: 0.1,
 } as const;
 
 export const ORB_PEARLS: OrbPearl[] = [
@@ -75,123 +113,123 @@ export const PROJECTS: Project[] = [
     slug: 'gotcha-drinks',
     category: 'brandingSocial',
     titleKey: 'gotchaDrinks',
-    cover: `${CDN}/6a4b929174269ac63cf59d61_1.jpg`,
+    cover: '/images/projects/gotcha-drinks/cover.webp',
     media: [
-      { type: 'image', src: `${CDN}/6a43b57542df500f241f2d99_togobar_menu%201.png` },
-      { type: 'image', src: `${CDN}/6a43b612994990363a6d8478_screens%20spring%20special%202026-09%201.png` },
-      { type: 'image', src: `${CDN}/6a43b612334b25b9885e72b1_screens%20spring%20special%202026-10%201.png` },
-      { type: 'image', src: `${CDN}/6a43b612f2023af38925e1ea_screens%20spring%20special%202026-08%201.png` },
-      { type: 'image', src: `${CDN}/6a43b612334b25b9885e7296_screens%20spring%20special%202026-12%201.png` },
-      { type: 'image', src: `${CDN}/6a43b612a5e6b7fa2b0b854f_screens%20spring%20special%202026-11%201.png` },
-      { type: 'image', src: `${CDN}/6a43b612263a2780ef7db38a_screens%20spring%20special%202026-07%201.png` },
-      { type: 'image', src: `${CDN}/6a43b572a7b3e9049f12f9c8_CreamchaPost-04%201.png` },
-      { type: 'image', src: `${CDN}/6a43b572994990363a6cf98a_CreamchaPost-01%201.png` },
-      { type: 'image', src: `${CDN}/6a43b571994990363a6cf928_CreamchaPost-02%201.png` },
-      { type: 'image', src: `${CDN}/6a43b57111ddd166c21048e6_CreamchaPost-03%201.png` },
-      { type: 'image', src: `${CDN}/6a43b573ba6bdd45082a5a70_hiring%20posts%20example-01%201.png` },
-      { type: 'image', src: `${CDN}/6a4b9050069a1dc98709fb83_spring%20characters%20post%20size-07%201.png` },
-      { type: 'image', src: `${CDN}/6a4b9050fe09d8eb5046a785_spring%20characters%20post%20size-02%201.png` },
-      { type: 'image', src: `${CDN}/6a4b9050f46c40af53dc2655_spring%20characters%20post%20size-03%201.png` },
-      { type: 'image', src: `${CDN}/6a4b9050069a1dc98709fbec_spring%20characters%20post%20size-06%201.png` },
-      { type: 'image', src: `${CDN}/6a4b906c0795e352133314f7_spring%20characters%20post%20size-01%201.png` },
-      { type: 'image', src: `${CDN}/6a4b90507f9eb91c1f1f4b37_spring%20characters%20post%20size-04%201.png` },
-      { type: 'image', src: `${CDN}/6a4b90502c8c9686cacdcd70_spring%20characters%20post%20size-05%201.png` },
-      { type: 'image', src: `${CDN}/6a43b5736a550680f0e72f35_Dahuks2-01%201.png` },
-      { type: 'image', src: `${CDN}/6a43b5736a550680f0e72f02_Dahuks-01%201.png` },
-      { type: 'image', src: `${CDN}/6a43b57342df500f241f2c42_DAHUKORD-01%201.png` },
-      { type: 'image', src: `${CDN}/6a43b5725d9126845a8aa91e_DahukKoghk-01%201.png` },
-      { type: 'image', src: `${CDN}/6a43b574969bb39d6a553e75_Shun-01%201.png` },
-      { type: 'image', src: `${CDN}/6a43b57043b21a26c5a20912_Bajak-01%201.png` },
+      { type: 'image', src: '/images/projects/gotcha-drinks/01.webp' },
+      { type: 'image', src: '/images/projects/gotcha-drinks/02.webp' },
+      { type: 'image', src: '/images/projects/gotcha-drinks/03.webp' },
+      { type: 'image', src: '/images/projects/gotcha-drinks/04.webp' },
+      { type: 'image', src: '/images/projects/gotcha-drinks/05.webp' },
+      { type: 'image', src: '/images/projects/gotcha-drinks/06.webp' },
+      { type: 'image', src: '/images/projects/gotcha-drinks/07.webp' },
+      { type: 'image', src: '/images/projects/gotcha-drinks/08.webp' },
+      { type: 'image', src: '/images/projects/gotcha-drinks/09.webp' },
+      { type: 'image', src: '/images/projects/gotcha-drinks/10.webp' },
+      { type: 'image', src: '/images/projects/gotcha-drinks/11.webp' },
+      { type: 'image', src: '/images/projects/gotcha-drinks/12.webp' },
+      { type: 'image', src: '/images/projects/gotcha-drinks/13.webp' },
+      { type: 'image', src: '/images/projects/gotcha-drinks/14.webp' },
+      { type: 'image', src: '/images/projects/gotcha-drinks/15.webp' },
+      { type: 'image', src: '/images/projects/gotcha-drinks/16.webp' },
+      { type: 'image', src: '/images/projects/gotcha-drinks/17.webp' },
+      { type: 'image', src: '/images/projects/gotcha-drinks/18.webp' },
+      { type: 'image', src: '/images/projects/gotcha-drinks/19.webp' },
+      { type: 'image', src: '/images/projects/gotcha-drinks/20.webp' },
+      { type: 'image', src: '/images/projects/gotcha-drinks/21.webp' },
+      { type: 'image', src: '/images/projects/gotcha-drinks/22.webp' },
+      { type: 'image', src: '/images/projects/gotcha-drinks/23.webp' },
+      { type: 'image', src: '/images/projects/gotcha-drinks/24.webp' },
+      { type: 'image', src: '/images/projects/gotcha-drinks/25.webp' },
     ],
   },
   {
     slug: 'andmore-from-gotcha',
     category: 'menuSocial',
     titleKey: 'andMore',
-    cover: `${CDN}/6a4b9291d6c7f92c88c8a83c_2.jpg`,
+    cover: '/images/projects/andmore-from-gotcha/cover.webp',
     media: [
-      { type: 'image', src: `${CDN}/6a43b572a5ab51665093bf64_create%20your%20plate%20post-01%201.png` },
-      { type: 'image', src: `${CDN}/6a43b5712ca568569d5d3d7a_Andmore3%201.png` },
-      { type: 'image', src: `${CDN}/6a43b571a5e6b7fa2b0b0618_Andmore1%201.png` },
-      { type: 'image', src: `${CDN}/6a43b578e6c99d2aabd6f624_lent_menu%20%5BRecovered%5D-01%201.png` },
-      { type: 'image', src: `${CDN}/6a43b578cb15d5a851a5a5f6_lent_menu%20%5BRecovered%5D-05%201.png` },
-      { type: 'image', src: `${CDN}/6a43b575334b25b9885ded39_lent_menu%20%5BRecovered%5D-04%201.png` },
-      { type: 'image', src: `${CDN}/6a43b578bc6baec6923cf8b1_lent_menu%20%5BRecovered%5D-07%201.png` },
-      { type: 'image', src: `${CDN}/6a43b57491e5af01547d3ed0_lent_menu%20%5BRecovered%5D-08%201.png` },
+      { type: 'image', src: '/images/projects/andmore-from-gotcha/01.webp' },
+      { type: 'image', src: '/images/projects/andmore-from-gotcha/02.webp' },
+      { type: 'image', src: '/images/projects/andmore-from-gotcha/03.webp' },
+      { type: 'image', src: '/images/projects/andmore-from-gotcha/04.webp' },
+      { type: 'image', src: '/images/projects/andmore-from-gotcha/05.webp' },
+      { type: 'image', src: '/images/projects/andmore-from-gotcha/06.webp' },
+      { type: 'image', src: '/images/projects/andmore-from-gotcha/07.webp' },
+      { type: 'image', src: '/images/projects/andmore-from-gotcha/08.webp' },
     ],
   },
   {
     slug: 'concert-posters',
     category: 'posters',
     titleKey: 'concertPosters',
-    cover: `${CDN}/6a4b92910194d64a174af083_7.jpg`,
+    cover: '/images/projects/concert-posters/cover.webp',
     media: [
-      { type: 'image', src: `${CDN}/6a43b573a5ab51665093bfc4_Eka%201.png` },
-      { type: 'image', src: `${CDN}/6a45140b7665cc8b34de52da_image%203.png` },
-      { type: 'image', src: `${CDN}/6ac8c0e17499c84e863dd031_2f9a158e-46d7-4093-a88f-8d7038eb6c02.jpg` },
-      { type: 'image', src: `${CDN}/6ac8c0fac7725107409b78c4_761a401f-41ec-42db-becb-d9557dd09308.jpg` },
-      { type: 'image', src: `${CDN}/6ac8c0fa448ebae176f70846_d7e41854-11ee-43c2-9d32-cad59c65e1c1.jpg` },
-      { type: 'image', src: `${CDN}/6ac8c0fa259a69fc61b91fe0_235b820e-59cc-4065-87ca-fe3d5343871a.jpg` },
+      { type: 'image', src: '/images/projects/concert-posters/01.webp' },
+      { type: 'image', src: '/images/projects/concert-posters/02.webp' },
+      { type: 'image', src: '/images/projects/concert-posters/03.webp' },
+      { type: 'image', src: '/images/projects/concert-posters/04.webp' },
+      { type: 'image', src: '/images/projects/concert-posters/05.webp' },
+      { type: 'image', src: '/images/projects/concert-posters/06.webp' },
     ],
   },
   {
     slug: 'neka-j-space',
     category: 'brandVisuals',
     titleKey: 'neka',
-    cover: `${CDN}/6a4b92917e7e01d646eff70a_5.jpg`,
+    cover: '/images/projects/neka-j-space/cover.webp',
     media: [
-      { type: 'image', src: `${CDN}/6a43b57843af9d4fe43d2d43_Neka(1)%201.png` },
-      { type: 'image', src: `${CDN}/6a43b5742ca568569d5d42c8_Neka04%201.png` },
-      { type: 'image', src: `${CDN}/6a43b57842df500f241f3033_MovenpickxNeka%201.png` },
-      { type: 'image', src: `${CDN}/6a43b574967f4b701b752f73_Neka%205.png` },
+      { type: 'image', src: '/images/projects/neka-j-space/01.webp' },
+      { type: 'image', src: '/images/projects/neka-j-space/02.webp' },
+      { type: 'image', src: '/images/projects/neka-j-space/03.webp' },
+      { type: 'image', src: '/images/projects/neka-j-space/04.webp' },
     ],
   },
   {
     slug: 'korpus',
     category: 'brandVisuals',
     titleKey: 'korpus',
-    cover: `${CDN}/6a4b92919087bd67682e08c6_4.jpg`,
+    cover: '/images/projects/korpus/cover.webp',
     media: [
-      { type: 'image', src: `${CDN}/6a43b57450d2b666255e4738_korpus(1)%201.png` },
-      { type: 'image', src: `${CDN}/6a43b5734db9acb17b4069db_korpus%201.png` },
-      { type: 'image', src: `${CDN}/6a43b573312259508feb26f7_korpus(2)%201.png` },
+      { type: 'image', src: '/images/projects/korpus/01.webp' },
+      { type: 'image', src: '/images/projects/korpus/02.webp' },
+      { type: 'image', src: '/images/projects/korpus/03.webp' },
     ],
   },
   {
     slug: 'fastdevnet',
     category: 'socialMedia',
     titleKey: 'fastDevNet',
-    cover: `${CDN}/6a4b9291c0f664cd3d95386b_3.jpg`,
+    cover: '/images/projects/fastdevnet/cover.webp',
     media: [
-      { type: 'image', src: `${CDN}/6a43b57473199eededeecd31_post6%201.png` },
-      { type: 'image', src: `${CDN}/6a4b930cf46c40af53de17a0_Post9.jpg` },
-      { type: 'image', src: `${CDN}/6a4b930c7e7e01d646f08a7d_post8.jpg` },
-      { type: 'image', src: `${CDN}/6a4b930ce3f24f89d95ed075_Post16.jpg` },
-      { type: 'image', src: `${CDN}/6a4b930c0ce76ad8779e0a03_Post10.jpg` },
-      { type: 'image', src: `${CDN}/6a43b57411ddd166c2104ae7_Post5%201.png` },
-      { type: 'image', src: `${CDN}/6a43b574acf6624bb1e233f1_post3%201.png` },
+      { type: 'image', src: '/images/projects/fastdevnet/01.webp' },
+      { type: 'image', src: '/images/projects/fastdevnet/02.webp' },
+      { type: 'image', src: '/images/projects/fastdevnet/03.webp' },
+      { type: 'image', src: '/images/projects/fastdevnet/04.webp' },
+      { type: 'image', src: '/images/projects/fastdevnet/05.webp' },
+      { type: 'image', src: '/images/projects/fastdevnet/06.webp' },
+      { type: 'image', src: '/images/projects/fastdevnet/07.webp' },
     ],
   },
   {
     slug: 'igaming-poster',
     category: 'poster',
     titleKey: 'igaming',
-    cover: `${CDN}/6a4b9290f9790e8d86b91a76_6.jpg`,
+    cover: '/images/projects/igaming-poster/cover.webp',
     media: [
-      { type: 'image', src: `${CDN}/6a43b578ce797c8a88dd6d09_AppConferenceCancun%201.png` },
+      { type: 'image', src: '/images/projects/igaming-poster/01.webp' },
     ],
   },
   {
     slug: 'animated-illustrations',
     category: 'animation',
     titleKey: 'animated',
-    cover: `${CDN}/6ac90c357e7a6a04e2f99cc7_3a90d2f6-80c0-4c6f-b9af-cf0ec8461ce9.jpg`,
+    cover: '/images/projects/animated-illustrations/cover.webp',
     media: [
-      { type: 'video', src: 'https://cdn.prod.website-files.com/6a43afeaaaec0bbbf56551b1%2F6ac90b8a9f2a10ac24057191_IMG_2404-ezgif.com-mp4-to-webm-converter_mp4.mp4', poster: 'https://cdn.prod.website-files.com/6a43afeaaaec0bbbf56551b1%2F6ac90b8a9f2a10ac24057191_IMG_2404-ezgif.com-mp4-to-webm-converter_poster.0000000.jpg' },
-      { type: 'video', src: 'https://cdn.prod.website-files.com/6a43afeaaaec0bbbf56551b1%2F6ac90ba92c9ad408b0c433ee_IMG_2403-ezgif.com-mp4-to-webm-converter_mp4.mp4', poster: 'https://cdn.prod.website-files.com/6a43afeaaaec0bbbf56551b1%2F6ac90ba92c9ad408b0c433ee_IMG_2403-ezgif.com-mp4-to-webm-converter_poster.0000000.jpg' },
-      { type: 'video', src: 'https://cdn.prod.website-files.com/6a43afeaaaec0bbbf56551b1%2F6ac90bc6fd056b97e41438f3_IMG_2408-ezgif.com-mp4-to-webm-converter_mp4.mp4', poster: 'https://cdn.prod.website-files.com/6a43afeaaaec0bbbf56551b1%2F6ac90bc6fd056b97e41438f3_IMG_2408-ezgif.com-mp4-to-webm-converter_poster.0000000.jpg' },
-      { type: 'video', src: 'https://cdn.prod.website-files.com/6a43afeaaaec0bbbf56551b1%2F6ac90bf3bdbb462f3d7f285d_IMG_2405-ezgif.com-mp4-to-webm-converter_mp4.mp4', poster: 'https://cdn.prod.website-files.com/6a43afeaaaec0bbbf56551b1%2F6ac90bf3bdbb462f3d7f285d_IMG_2405-ezgif.com-mp4-to-webm-converter_poster.0000000.jpg' },
-      { type: 'video', src: 'https://cdn.prod.website-files.com/6a43afeaaaec0bbbf56551b1%2F6ac90bcf32f967e8f4f4657c_IMG_2406-ezgif.com-mp4-to-webm-converter_mp4.mp4', poster: 'https://cdn.prod.website-files.com/6a43afeaaaec0bbbf56551b1%2F6ac90bcf32f967e8f4f4657c_IMG_2406-ezgif.com-mp4-to-webm-converter_poster.0000000.jpg' },
+      { type: 'video', src: '/videos/animated-illustrations/01.mp4', poster: '/images/projects/animated-illustrations/video-01.webp' },
+      { type: 'video', src: '/videos/animated-illustrations/02.mp4', poster: '/images/projects/animated-illustrations/video-02.webp' },
+      { type: 'video', src: '/videos/animated-illustrations/03.mp4', poster: '/images/projects/animated-illustrations/video-03.webp' },
+      { type: 'video', src: '/videos/animated-illustrations/04.mp4', poster: '/images/projects/animated-illustrations/video-04.webp' },
+      { type: 'video', src: '/videos/animated-illustrations/05.mp4', poster: '/images/projects/animated-illustrations/video-05.webp' },
     ],
   },
 ];

@@ -58,7 +58,7 @@ export const Header = () => {
             </div>
             <div className="md:hidden">
               <Button
-                variant={menu.on ? 'primary' : 'light'}
+                variant={menu.on ? 'primary' : 'glass'}
                 size="icon"
                 onClick={menu.toggle}
                 aria-label={menu.on ? t('header.closeMenu') : t('header.openMenu')}

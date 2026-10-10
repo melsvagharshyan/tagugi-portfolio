@@ -37,6 +37,10 @@ export const ru: Translation = {
     closeMenu: 'Закрыть меню',
     ringText: 'Дизайнер · Концепт-художник · ',
   },
+  welcome: {
+    title: 'Добро пожаловать',
+    subtitle: 'Тагуи Хартенян · Портфолио',
+  },
   hero: {
     eyebrow: 'Графический дизайнер и концепт-художник',
     title: 'Привет, я <em>Тагуи</em> — старший графический дизайнер из Армении, создающий запоминающиеся визуалы.',
@@ -60,8 +64,6 @@ export const ru: Translation = {
     title: 'Избранные <em>работы</em>',
     view: 'Открыть',
     open: 'Открыть проект',
-    previous: 'Предыдущий проект',
-    next: 'Следующий проект',
     close: 'Закрыть проект',
     media,
     categories: {
@@ -101,7 +103,9 @@ export const ru: Translation = {
       skills: 'Навыки',
       languages: 'Языки',
     },
-    languages: ['Армянский', 'Русский', 'Английский'],
+    languages: { hy: 'Армянский', ru: 'Русский', en: 'Английский' },
+    skillGroups: { design: 'Дизайн и иллюстрация', threeD: '3D и real-time', motion: 'Анимация' },
+    tools: 'Инструментов: {{count}}',
     experience: [
       { place: 'Gotcha / and m[ ]re', period: '2025 - 2026', roles: ['Графический дизайнер'] },
       { place: 'Neka Group', period: '2024 - 2025', roles: ['Графический дизайнер'] },

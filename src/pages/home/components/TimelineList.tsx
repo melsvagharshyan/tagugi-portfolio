@@ -7,8 +7,8 @@ interface TimelineListProps {
 
 export const TimelineList = ({ entries }: TimelineListProps) => (
   <ol>
-    {entries.map((entry, index) => (
-      <TimelineItem key={entry.place} entry={entry} index={index} />
+    {entries.map((entry) => (
+      <TimelineItem key={entry.place} entry={entry} />
     ))}
   </ol>
 );

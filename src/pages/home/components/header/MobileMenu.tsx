@@ -49,10 +49,10 @@ export const MobileMenu = ({ open, onClose }: MobileMenuProps) => {
           </a>
         </div>
         <div className="flex gap-2">
-          <Button href={OWNER.behance} target="_blank" rel="noreferrer" variant="outline" size="icon" aria-label="Behance" tabIndex={open ? 0 : -1}>
+          <Button href={OWNER.behance} target="_blank" rel="noreferrer" variant="glass" size="icon" aria-label="Behance" tabIndex={open ? 0 : -1}>
             <FaBehance />
           </Button>
-          <Button href={OWNER.linkedin} target="_blank" rel="noreferrer" variant="outline" size="icon" aria-label="LinkedIn" tabIndex={open ? 0 : -1}>
+          <Button href={OWNER.linkedin} target="_blank" rel="noreferrer" variant="glass" size="icon" aria-label="LinkedIn" tabIndex={open ? 0 : -1}>
             <FaLinkedinIn />
           </Button>
         </div>

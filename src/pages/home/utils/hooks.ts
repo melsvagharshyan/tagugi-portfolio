@@ -1,11 +1,4 @@
-import { animate, useMotionValue, type PanInfo } from 'motion/react';
-import {
-  useCallback,
-  useEffect,
-  useMemo,
-  useRef,
-  useState,
-} from 'react';
+import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { DEFAULT_LANGUAGE, LANGUAGES, type LanguageCode } from '../../../i18n/languages';
 import {
@@ -14,9 +7,8 @@ import {
   HEADER_HIDE_AFTER,
   HEADER_SCROLL_OFFSET,
   PROJECTS,
-  SWIPER,
+  WELCOME,
 } from './constants';
-import { getSwiperCardWidth } from './helpers';
 import type { CursorVariant, Project } from './types';
 
 const getCursorVariant = (target: EventTarget | null): CursorVariant => {
@@ -109,6 +101,35 @@ export const useBodyScrollLock = (locked: boolean) => {
   }, [locked]);
 };
 
+const hasSeenWelcome = (): boolean => {
+  try {
+    return sessionStorage.getItem(WELCOME.storageKey) === 'true';
+  } catch {
+    return true;
+  }
+};
+
+export const useWelcomeIntro = () => {
+  const [visible, setVisible] = useState(() => !hasSeenWelcome());
+
+  useBodyScrollLock(visible);
+
+  useEffect(() => {
+    if (!visible) return;
+    const timer = window.setTimeout(() => {
+      try {
+        sessionStorage.setItem(WELCOME.storageKey, 'true');
+      } catch {
+        // Storage can be unavailable (private mode); the intro will simply show again next time.
+      }
+      setVisible(false);
+    }, WELCOME.duration);
+    return () => window.clearTimeout(timer);
+  }, [visible]);
+
+  return visible;
+};
+
 export const useEscapeKey = (onEscape: () => void, enabled = true) => {
   useEffect(() => {
     if (!enabled) return;
@@ -141,43 +162,6 @@ export const useInView = <T extends Element>(threshold = 0.15, rootMargin = '0px
   }, [threshold, rootMargin]);
 
   return { ref, inView };
-};
-
-export const useSwipeCarousel = <T extends HTMLElement>(count: number) => {
-  const viewportRef = useRef<T>(null);
-  const x = useMotionValue(0);
-  const [index, setIndex] = useState(0);
-  const [cardWidth, setCardWidth] = useState(0);
-  const step = cardWidth + SWIPER.gap;
-
-  useEffect(() => {
-    const node = viewportRef.current;
-    if (!node) return;
-    const observer = new ResizeObserver(([entry]) => setCardWidth(getSwiperCardWidth(entry.contentRect.width)));
-    observer.observe(node);
-    return () => observer.disconnect();
-  }, []);
-
-  useEffect(() => {
-    const controls = animate(x, -index * step, SWIPER.spring);
-    return () => controls.stop();
-  }, [index, step, x]);
-
-  const goTo = useCallback(
-    (next: number) => {
-      const clamped = Math.min(count - 1, Math.max(0, next));
-      setIndex(clamped);
-      if (clamped === index) animate(x, -clamped * step, SWIPER.spring);
-    },
-    [count, index, step, x],
-  );
-
-  const handleDragEnd = (_event: MouseEvent | TouchEvent | PointerEvent, { offset, velocity }: PanInfo) => {
-    const swipe = offset.x + velocity.x * SWIPER.velocityFactor;
-    goTo(index - Math.round(swipe / step));
-  };
-
-  return { viewportRef, x, index, cardWidth, goTo, handleDragEnd, minX: -(count - 1) * step };
 };
 
 export const useHeaderScroll = (locked: boolean) => {

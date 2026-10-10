@@ -8,6 +8,7 @@ import { Marquee } from './components/Marquee';
 import { Header } from './components/header/Header';
 import { ProjectModal } from './components/ProjectModal';
 import { ProjectsSection } from './components/ProjectsSection';
+import { WelcomeIntro } from './components/WelcomeIntro';
 import { useProjectViewer } from './utils/hooks';
 
 const loadMotionFeatures = () => import('./utils/motionFeatures').then((module) => module.default);
@@ -30,6 +31,7 @@ const HomePage = () => {
           <Footer />
           <ProjectModal project={activeProject} onClose={close} />
           <CustomCursor />
+          <WelcomeIntro />
         </div>
       </MotionConfig>
     </LazyMotion>

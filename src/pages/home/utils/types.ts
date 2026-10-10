@@ -1,3 +1,4 @@
+import type { IconType } from 'react-icons';
 import type { Translation } from '../../../i18n/locales/en';
 
 export type ProjectMedia =
@@ -24,6 +25,16 @@ export interface NavLink {
 }
 
 export type TimelineEntry = Translation['about']['experience'][number];
+
+export interface Skill {
+  name: string;
+  icon: IconType;
+}
+
+export interface SkillGroup {
+  id: keyof Translation['about']['skillGroups'];
+  skills: Skill[];
+}
 
 export type ContactKind = keyof Translation['contact']['labels'];
 
