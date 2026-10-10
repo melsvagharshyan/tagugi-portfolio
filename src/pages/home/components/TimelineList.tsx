@@ -1,19 +1,32 @@
+import { lazy, Suspense } from 'react';
+import { useTimeline } from '../utils/hooks';
 import type { TimelineEntry } from '../utils/types';
+import { TimelineItem } from './TimelineItem';
+
+const PearlThreadScene = lazy(() =>
+  import('./three/PearlThreadScene').then((module) => ({ default: module.PearlThreadScene })),
+);
 
 interface TimelineListProps {
   entries: TimelineEntry[];
 }
 
-export const TimelineList = ({ entries }: TimelineListProps) => (
-  <ol className="divide-y divide-ink/10">
-    {entries.map((entry) => (
-      <li key={entry.place} className="grid grid-cols-[1fr_auto] items-baseline gap-x-4 py-4 first:pt-0 last:pb-0 sm:gap-x-6">
-        <div className="min-w-0">
-          <h4 className="text-lg font-semibold text-ink">{entry.place}</h4>
-          <p className="mt-0.5 text-sm tracking-wide text-muted">{entry.roles.join(' · ')}</p>
-        </div>
-        <span className="font-serif text-sm whitespace-nowrap text-wine italic sm:text-base">{entry.period}</span>
-      </li>
-    ))}
-  </ol>
-);
+export const TimelineList = ({ entries }: TimelineListProps) => {
+  const { listRef, progressRef, layout, reachedCount, visible } = useTimeline<HTMLDivElement>();
+
+  return (
+    <div ref={listRef} className="relative pl-12 sm:pl-16">
+      <div aria-hidden className="pointer-events-none absolute inset-y-0 left-0 w-12 sm:w-16">
+        <Suspense fallback={null}>
+          <PearlThreadScene layout={layout} progressRef={progressRef} active={visible} />
+        </Suspense>
+      </div>
+
+      <ol>
+        {entries.map((entry, index) => (
+          <TimelineItem key={entry.place} entry={entry} index={index} reached={index < reachedCount} />
+        ))}
+      </ol>
+    </div>
+  );
+};

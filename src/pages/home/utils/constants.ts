@@ -118,6 +118,13 @@ export const ABOUT_SCROLL = {
   pearlParallax: 4,
 };
 
+export const TIMELINE = {
+  pearlRadius: 9,
+  threadRadius: 1.1,
+  wobble: 7,
+  viewportFocus: 0.65,
+};
+
 export const PROJECTS: Project[] = [
   {
     slug: 'gotcha-drinks',

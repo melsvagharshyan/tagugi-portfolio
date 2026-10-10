@@ -8,9 +8,10 @@ import {
   HEADER_SCROLL_OFFSET,
   PROJECTS,
   SKILLS_GLOBE,
+  TIMELINE,
 } from './constants';
-import { getScrollProgress } from './helpers';
-import type { CursorVariant, DragSpinState, Project } from './types';
+import { getReadingProgress, getScrollProgress } from './helpers';
+import type { CursorVariant, DragSpinState, Project, TimelineLayout } from './types';
 
 const getCursorVariant = (target: EventTarget | null): CursorVariant => {
   if (!(target instanceof Element)) return 'default';
@@ -258,6 +259,50 @@ export const useScrollScene = <T extends HTMLElement>() => {
   }, []);
 
   return { containerRef, progressRef, visible };
+};
+
+export const useTimeline = <T extends HTMLElement>() => {
+  const listRef = useRef<T>(null);
+  const progressRef = useRef(0);
+  const [layout, setLayout] = useState<TimelineLayout>({ height: 0, anchors: [] });
+  const [reachedCount, setReachedCount] = useState(0);
+  const [visible, setVisible] = useState(false);
+
+  useEffect(() => {
+    const node = listRef.current;
+    if (!node) return;
+    let anchors: number[] = [];
+
+    const update = () => {
+      const progress = getReadingProgress(node, TIMELINE.viewportFocus);
+      progressRef.current = progress;
+      const y = progress * node.offsetHeight;
+      setReachedCount(anchors.filter((anchor) => anchor <= y).length);
+    };
+
+    const measure = () => {
+      const listTop = node.getBoundingClientRect().top;
+      anchors = [...node.querySelectorAll<HTMLElement>('[data-timeline-anchor]')].map((anchor) => {
+        const rect = anchor.getBoundingClientRect();
+        return rect.top - listTop + rect.height / 2;
+      });
+      setLayout({ height: node.offsetHeight, anchors });
+      update();
+    };
+
+    const resizeObserver = new ResizeObserver(measure);
+    const visibilityObserver = new IntersectionObserver(([entry]) => setVisible(entry.isIntersecting));
+    resizeObserver.observe(node);
+    visibilityObserver.observe(node);
+    window.addEventListener('scroll', update, { passive: true });
+    return () => {
+      resizeObserver.disconnect();
+      visibilityObserver.disconnect();
+      window.removeEventListener('scroll', update);
+    };
+  }, []);
+
+  return { listRef, progressRef, layout, reachedCount, visible };
 };
 
 export const useDragSpin = () => {

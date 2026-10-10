@@ -49,6 +49,11 @@ export interface DragSpinState {
   dragging: boolean;
 }
 
+export interface TimelineLayout {
+  height: number;
+  anchors: number[];
+}
+
 export interface SilkRibbonConfig {
   color: string;
   position: [number, number, number];
